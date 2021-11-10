@@ -1,12 +1,15 @@
 
 #coding=utf-8
 
+import sys
 import requests
 import time
 import random
 import configparser
 import os
-import sys
+
+sys.path.append('..')
+import utils.captcha.SlideCrack
 
 class czmyy_test:
 
@@ -24,6 +27,10 @@ class czmyy_test:
         self.delaytime = 4
         #
         self.Checks = True
+        # 猜测验证码的X坐标？
+        self.xsite = 0
+        # 验证码的有坐标
+        self.ysite = 1
         # Cookies
         self.yi_cookies = self.confzmyy.get('cookies')
         # 请求头
@@ -38,12 +45,8 @@ class czmyy_test:
             'Connection': 'Keep-Alive',
             'zftsl': self.confzmyy.get('zftsl')
         }
-        # 猜测验证码的X坐标？
-        self.yi_xsite = self.confzmyy.getint('xsite')
-        # 验证码的有坐标
-        self.yi_ysite = self.confzmyy.getint('ysite')
         # 填写预约时间
-        self.yi_yytimes = self.confzmyy.get('yuyuetimes')
+        self.yi_yytimes = self.confzmyy.get('yytimes')
         # 疫苗种类
         self.yi_ymid = self.confzmyy.getint('ymid')
         # 生日
@@ -63,13 +66,17 @@ class czmyy_test:
         self.__init_config__()
         self.__init_var__()
 
-    def generate_random_str(randomlength):
+    def __generate_random_str(randomlength):
         random_str = ''
         base_str = 'ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz0123456789'
         length = len(base_str) - 1
         for i in range(randomlength):
             random_str += base_str[random.randint(0, length)]
         return random_str
+
+    def __CaptchaSlideCrack(self, tigerpath, dragonath, processedath):
+        s =  SlideCrack(tigerpath, dragonath, processedath)
+        return s.discern()
 
     def GetSubscribe(self):
         print(u'（1）开始访问获取客户订阅日期详细信息：GetCustSubscribeDateDetail')
@@ -169,8 +176,8 @@ class czmyy_test:
         payload = {
             'act': 'CaptchaVerify',
             'token': '',
-            'x': self.yi_xsite,
-            'y': self.yi_ysite,
+            'x': self.xsite,
+            'y': self.ysite,
         }
 
         code = requests.get(
