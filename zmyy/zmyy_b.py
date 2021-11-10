@@ -31,6 +31,8 @@ class czmyy_test:
         self.xsite = 0
         # 验证码的有坐标
         self.ysite = 1
+        # url
+        self.url = 'https://cloud.cn2030.com/sc/wx/HandlerSubscribe.ashx'
         # Cookies
         self.yi_cookies = self.confzmyy.get('cookies')
         # 请求头
@@ -88,7 +90,7 @@ class czmyy_test:
             'scdate': self.yi_yytimes,
         }
         code = requests.get(
-            url="https://cloud.cn2030.com/sc/wx/HandlerSubscribe.ashx",
+            url=self.url,
             headers=self.headers, params=payload, verify=False)
         # 转json
         if int(code.status_code) == 200:
@@ -124,7 +126,7 @@ class czmyy_test:
             'act': 'GetCaptcha',
         }
         code = requests.get(
-            url="https://cloud.cn2030.com/sc/wx/HandlerSubscribe.ashx",
+            url=self.url,
             headers=self.headers, params=payload, verify=False)
         # 转json
         if int(code.status_code) == 200:
@@ -146,7 +148,7 @@ class czmyy_test:
         }
 
         code = requests.get(
-            url="https://cloud.cn2030.com/sc/wx/HandlerSubscribe.ashx",
+            url=self.url,
             headers=self.headers, params=payload, verify=False)
         # 转json
 
@@ -181,7 +183,7 @@ class czmyy_test:
         }
 
         code = requests.get(
-            url="https://cloud.cn2030.com/sc/wx/HandlerSubscribe.ashx",
+            url=self.url,
             headers=self.headers, params=payload, verify=False)
         # 转json
         if int(code.status_code) == 200:
@@ -223,7 +225,7 @@ class czmyy_test:
         }
         print(payload)
         tongyong = requests.get(
-            url="https://cloud.cn2030.com/sc/wx/HandlerSubscribe.ashx",
+            url=self.url,
             headers=self.headers, params=payload, verify=False)
         # 转json
         json_dict = tongyong.json()
