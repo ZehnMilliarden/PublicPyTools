@@ -1,0 +1,17 @@
+{
+    "python.languageServer": "Pylance",
+    "editor.formatOnSave": true,
+    "python.autoComplete.addBrackets": true,
+    "python.autoComplete.extraPaths": [
+        "./",
+    ],
+    "python.analysis.extraPaths": [
+        "./",
+    ],
+    "python.jediEnable": false,
+    "python.envFile": "${workspaceFolder}/.vscode/.env",
+    "python.analysis.completeFunctionParens": true,
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "${workspaceRoot}"
+    }
+}
